@@ -1,0 +1,284 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Envio de dados",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Qual seu nome?",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Qual seu e-mail?",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Qual seu telefone?",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Insira seu curriculo",
+              "fieldType": "file",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "9c559309-ae40-4b8a-97c0-c62c185d9347",
+      "name": "On form submission",
+      "webhookId": "6b0627c6-7b82-456c-aec0-6c990496d11f"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Atue como um Tech Recruiter Sênior avaliando candidatos para uma vaga de Desenvolvedor de Software.\n\nSua tarefa é analisar o currículo fornecido abaixo e determinar clara e objetivamente se o candidato atende aos requisitos mínimos da vaga.\n\n**Requisitos Mínimos da Vaga:**\n1. **Tempo de Experiência:** Pelo menos 2 anos de experiência profissional comprovada na área de desenvolvimento de software.\n2. **Habilidade Técnica:** Conhecimento prático e aplicado em Python, especificamente voltado para a criação de automações (ex: criação de scripts para tarefas rotineiras, automação de infraestrutura, interação com APIs, automação de testes ou processamento de dados).\n\n**Formato da Resposta Exigida:**\nPor favor, estruture sua análise da seguinte forma:\n\n* **Veredito Final:** [Aprovado para próxima fase / Reprovado]\n* **Análise de Experiência:** [O candidato possui 2 anos ou mais? Detalhe as experiências listadas que comprovam esse tempo, somando os períodos, se necessário.]\n* **Análise de Automação com Python:** [O candidato demonstra uso de Python para automação? Destaque projetos, ferramentas ou bibliotecas mencionadas no currículo que evidenciem a capacidade de escrever scripts e automatizar processos.]\n* **Pontos Fortes Adicionais:** [Liste outras habilidades ou tecnologias relevantes para desenvolvimento de software presentes no currículo.]\n* **Lacunas ou Pontos de Atenção:** [Mencione informações vagas, falta de clareza nas descrições ou tópicos que precisariam ser aprofundados em uma entrevista técnica.]\n{{ $json['Insira seu curriculo'] }}\ne adicione ao final o nome o email e telefone do candidato\n{{ $json['Qual seu nome?'] }}{{ $json['Qual seu e-mail?'] }}\n{{ $json['Qual seu telefone?'] }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "c50242cf-ea5c-496f-9c4d-ddc51b46da4c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        80,
+        208
+      ],
+      "id": "6e39d6e9-3233-4137-ad25-0d53c6ddf824",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "gWPN5iehPfg9iGBl",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "dc82de58-e3f7-4e24-b0e5-8a1f39f8156c",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "419ee140-f774-4123-8de0-e5bb1227c201",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": true,
+        "options": {
+          "ignoreCase": false
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        544,
+        16
+      ],
+      "id": "913940be-220a-43eb-8d77-6ba46f9a5ab0",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1M0yVCeWuONgNuchl45l4Qeaa25tNTWFWN208RDMJgrw/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1M0yVCeWuONgNuchl45l4Qeaa25tNTWFWN208RDMJgrw/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "output"
+          ],
+          "schema": [
+            {
+              "id": "output",
+              "displayName": "output",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1120,
+        -176
+      ],
+      "id": "ca326e4b-5e12-43fc-b4bb-eb7a01760bef",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleApi": {
+          "id": "IGuO4Y9ZyyUk10qD",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Em caso de aprovação na vaga indicada, pegue esses dados, para um futuro contato\n{{ $('On form submission').item.json['Qual seu nome?'] }}\n{{ $('On form submission').item.json['Qual seu e-mail?'] }}\n{{ $('On form submission').item.json['Qual seu telefone?'] }}\nMe fale só os dados e após me de uma breve descrição desse currículo, açgo bem curto\n{{ $json.output }} ",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        736,
+        -208
+      ],
+      "id": "1cb3725d-ec56-461f-be10-c73c21b051d8",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        736,
+        -64
+      ],
+      "id": "6b4d220f-6663-4d72-91a3-cb16bdab1d23",
+      "name": "Groq Chat Model1",
+      "credentials": {
+        "groqApi": {
+          "id": "gWPN5iehPfg9iGBl",
+          "name": "Groq account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c4e4d4bd314d85962c3772aa9d34f3aa2a86fa8ccdaa7510bb112b380473a9ff"
+  }
+}
