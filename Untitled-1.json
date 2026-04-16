@@ -33,7 +33,7 @@
         0,
         0
       ],
-      "id": "9c559309-ae40-4b8a-97c0-c62c185d9347",
+      "id": "",
       "name": "On form submission",
       "webhookId": "6b0627c6-7b82-456c-aec0-6c990496d11f"
     },
@@ -49,7 +49,7 @@
         208,
         0
       ],
-      "id": "c50242cf-ea5c-496f-9c4d-ddc51b46da4c",
+      "id": "",
       "name": "AI Agent"
     },
     {
@@ -63,11 +63,11 @@
         80,
         208
       ],
-      "id": "6e39d6e9-3233-4137-ad25-0d53c6ddf824",
+      "id": "",
       "name": "Groq Chat Model",
       "credentials": {
         "groqApi": {
-          "id": "gWPN5iehPfg9iGBl",
+          "id": "",
           "name": "Groq account"
         }
       }
@@ -83,7 +83,7 @@
           },
           "conditions": [
             {
-              "id": "dc82de58-e3f7-4e24-b0e5-8a1f39f8156c",
+              "id": "",
               "leftValue": "={{ $json.output }}",
               "rightValue": "",
               "operator": {
@@ -93,7 +93,7 @@
               }
             },
             {
-              "id": "419ee140-f774-4123-8de0-e5bb1227c201",
+              "id": "",
               "leftValue": "={{ $json.output }}",
               "rightValue": "",
               "operator": {
@@ -125,12 +125,12 @@
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "https://docs.google.com/spreadsheets/d/1M0yVCeWuONgNuchl45l4Qeaa25tNTWFWN208RDMJgrw/edit?gid=0#gid=0",
+          "value": "",
           "mode": "url"
         },
         "sheetName": {
           "__rl": true,
-          "value": "https://docs.google.com/spreadsheets/d/1M0yVCeWuONgNuchl45l4Qeaa25tNTWFWN208RDMJgrw/edit?gid=0#gid=0",
+          "value": "",
           "mode": "url"
         },
         "columns": {
@@ -162,11 +162,11 @@
         1120,
         -176
       ],
-      "id": "ca326e4b-5e12-43fc-b4bb-eb7a01760bef",
+      "id": "",
       "name": "Append row in sheet",
       "credentials": {
         "googleApi": {
-          "id": "IGuO4Y9ZyyUk10qD",
+          "id": "",
           "name": "Google Sheets account"
         }
       }
@@ -183,7 +183,7 @@
         736,
         -208
       ],
-      "id": "1cb3725d-ec56-461f-be10-c73c21b051d8",
+      "id": "",
       "name": "AI Agent1"
     },
     {
@@ -197,7 +197,7 @@
         736,
         -64
       ],
-      "id": "6b4d220f-6663-4d72-91a3-cb16bdab1d23",
+      "id": "",
       "name": "Groq Chat Model1",
       "credentials": {
         "groqApi": {
