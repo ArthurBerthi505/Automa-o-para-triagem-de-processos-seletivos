@@ -1,12 +1,14 @@
-🎯 O Desafio:
-Analisar dezenas de currículos manualmente para validar requisitos mínimos (como 2 anos de experiência e uso de Python para automação) consome muito tempo.
+# Candidate Screening Automation
 
-🛠️ A Solução:
-Desenvolvi um pipeline de triagem utilizando n8n para orquestrar o fluxo, integrando LLMs e planilhas.
+An n8n workflow that helps review applications against predefined criteria. It combines a structured LLM prompt, a decision step, and a Google Sheets record for rejected candidates.
 
-O fluxo funciona assim:
-1️⃣ O currículo entra no sistema.
-2️⃣ A API do Groq (IA) recebe um prompt altamente estruturado para atuar como Recruiter, analisando o texto do CV e extraindo o tempo de experiência real e as habilidades em Python.
-3️⃣ O n8n avalia a resposta da IA e toma a decisão:
-✅ Aprovados: Seguem no processo.
-❌ Reprovados: O fluxo adiciona o candidato e o motivo da reprovação em um Google Sheets via API (para histórico) e encerra o processo (ou envia um e-mail de feedback).
+## Workflow
+
+1. Receive a résumé for review.
+2. Send its text to the Groq API with a prompt that extracts relevant experience and Python skills.
+3. Evaluate the model response against the screening criteria.
+4. Record rejected applications and the stated reason in Google Sheets; qualifying applications continue through the workflow.
+
+The workflow JSON is included in this repository. Configure your own API and Google Sheets credentials in n8n before using it.
+
+> Automated screening output should be checked by a human before making hiring decisions. Model responses can be incomplete or inaccurate.
